@@ -15,7 +15,13 @@ builder.Services.AddDbContext<DataContext>(opt =>
     );
 });
 
+// Add the CORS policy to enable the clients to consume the API endpoints
+builder.Services.AddCors();
+
 var app = builder.Build();
+
+// Configure the HTTP request pipeline
+app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
 
 app.UseHttpsRedirection();
 
