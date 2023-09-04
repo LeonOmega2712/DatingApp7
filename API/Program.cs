@@ -1,5 +1,7 @@
-using API.Data;
-using Microsoft.EntityFrameworkCore;
+using System.Text;
+using API.Extensions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,16 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-// Add the DB contexto to our services list
-builder.Services.AddDbContext<DataContext>(opt =>
-{
-    opt.UseSqlite( // This method comes from the EntityFrameworkCore.Sqlite NuGet
-        builder.Configuration.GetConnectionString("DefaultConnection")
-    );
-});
-
-// Add the CORS policy to enable the clients to consume the API endpoints
-builder.Services.AddCors();
+// Keep the service adding in separate files to clean some code
+builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddIdentityServices(builder.Configuration);
 
 var app = builder.Build();
 
@@ -25,6 +20,7 @@ app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("ht
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
