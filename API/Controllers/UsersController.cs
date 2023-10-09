@@ -20,6 +20,7 @@ public class UsersController : BaseApiController // DRY: Remove headers with inh
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
     {
         var users = await _context.Users.ToListAsync(); // ToListAsync comes from: // * using Microsoft.EntityFrameworkCore; * //
