@@ -8,21 +8,14 @@ import { User } from './models/user';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  // title = 'Dating app'; // * inferred type
-  title: string = 'Dating app'; // declared type
-  // users: any; // * considered a bad practice to use any
+  title: string = 'Dating app';
 
-  constructor(
-    private accountService: AccountService
-  ) {} // dependency injection
+  constructor(private accountService: AccountService) {}
   ngOnInit() {
-    // This code executes after the component finish mounting
-    // this.getUsers();
     this.setCurrentUser();
   }
 
   setCurrentUser() {
-    // const user: User = JSON.parse(localStorage.getItem('user')!)
     const userString = localStorage.getItem('user');
     if (!userString) {
       return;
