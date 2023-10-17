@@ -23,6 +23,10 @@ public static class ApplicationServiceExtensions
 
         // JWT configuration
         services.AddScoped<ITokenService, TokenService>();
+        // Add this to make the repository injectable
+        services.AddScoped<IUserRepository, UserRepository>();
+        // Automapper's own configuration
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
         return services;
     }
