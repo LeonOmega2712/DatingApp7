@@ -17,13 +17,14 @@ import { SharedModule } from './modules/shared.module';
 import { TestErrorComponent } from './errors/test-error/test-error.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { MemberCardComponent } from './members/member-card/member-card.component';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ListsComponent,
-    MemberDetailComponent,
     MemberListComponent,
     MessagesComponent,
     NavComponent,
@@ -31,6 +32,7 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
     TestErrorComponent,
     NotFoundComponent,
     ServerErrorComponent,
+    MemberCardComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -44,6 +46,11 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
       multi: true,
     },
   ],
